@@ -11,6 +11,7 @@ function App() {
   }
 
   const [currentImage, setCurrentImage] = useState(null);
+  const [catName, setCatName] = useState("");
 
   const callAPI = async (query) => {
     const response = await fetch(query);
@@ -21,22 +22,43 @@ function App() {
         }
     else {
       setCurrentImage(json[0].url);
+      setCatName(json[0].breeds[0].name);
     }
   }
 
   return (
-      <div>
-        {currentImage ? (
-          <img
-            className="cat-image"
-            src={currentImage}
-            alt="Cat image returned"
-            style={{width:'300px',height:'300px',objectFit:'cover'}}
-          />
-        ) : (
-          <div> </div>
-        )}
-        <button onClick = {makeQuery}>Generate</button>
+      <div className = "everything">
+        <h1>Cool Cats</h1>
+        <p>Discover cats you've never seen before!</p>
+        <div className='catStuff'>
+          <p style={{ fontSize: '30px', margin:'0px', paddingBottom:'10px'}}>{catName}</p>
+          <div className = "attribute-buttons">
+            <button>a---</button>
+            <button>b---</button>
+            <button>c---</button>
+            <button>d---</button>
+          </div>
+          <br/>
+
+          {currentImage ? (
+            <img
+              className="cat-image"
+              src={currentImage}
+              alt="Cat image returned"
+              style={{width:'300px',height:'300px',objectFit:'cover'}}
+            />
+          ) : (
+            <div> </div>
+          )}
+
+          <br/><br/>
+          <button className = "generate-button" onClick = {makeQuery}>Generate</button>
+        </div>
+
+        <div class="sideNav">
+          <h2>Ban List</h2>
+          <h4>Select an attribute in your listing to ban it</h4>
+        </div>
       </div>
   );
 };

@@ -40,3 +40,36 @@
 .read-the-docs {
   color: #888;
 }
+.generate-button:hover{
+  border-color: white;
+  background-color: #1a1a1a;
+}
+
+.catStuff{
+  background-color:rgb(121, 121, 131);
+  border-radius: 20px;
+  padding:30px;
+  padding-top: 10px;
+  box-shadow: 0 4px 8px #f5f5f533,0 6px 20px #fdfdfd30;
+  text-align: center;
+}
+
+.attribute-buttons button{
+  margin-right: 10px;
+}
+
+.sideNav {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d2d2d2;
+  color: #000;
+  padding: 15px 15px 15px 10px;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+  align-items: center
+}
