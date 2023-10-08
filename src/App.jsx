@@ -18,21 +18,43 @@ function App() {
   const [weight, setWeight] = useState("");
 
   const callAPI = async (query) => {
-    const response = await fetch(query);
-    const json = await response.json();
-    console.log('JSON Response:', json);
-    if (json[0].url == null) {
-      alert("Oops! Something went wrong with that query, let's try again!")
+    let response = await fetch(query);
+    let json = await response.json();
+    while (true){
+      console.log('JSON Response:', json);
+      console.log(banButtons);
+      if (json[0].url == null) {
+        alert("Oops! Something went wrong with that query, let's try again!")
+      } 
+
+      if(banButtons.length == 0){
+        break;
+      }
+
+      let reFetch = false;
+      for(let i = 0;i < banButtons.length;i++){
+        if(banButtons[i].content == json[0].breeds[0].name ||
+           banButtons[i].content == (json[0].breeds[0].life_span + " years") ||
+           banButtons[i].content == json[0].breeds[0].origin ||
+           banButtons[i].content == (json[0].breeds[0].weight['imperial'] + " lbs")){
+            reFetch = true;
+            break;
         }
-    else {
-      setCurrentImage(json[0].url);
-      setCatName(json[0].breeds[0].name);
-      setDescription(json[0].breeds[0].description);
-      setLifeSpan(json[0].breeds[0].life_span + " years");
-      setOrigin(json[0].breeds[0].origin);
-      setWeight(json[0].breeds[0].weight['imperial'] + " lbs");
-      console.log(weight);
+      }
+
+      if (reFetch) {
+        response = await fetch(query);
+        json = await response.json();
+      } else {
+        break; 
+      }
     }
+    setCurrentImage(json[0].url);
+    setCatName(json[0].breeds[0].name);
+    setDescription(json[0].breeds[0].description);
+    setLifeSpan(json[0].breeds[0].life_span + " years");
+    setOrigin(json[0].breeds[0].origin);
+    setWeight(json[0].breeds[0].weight['imperial'] + " lbs");
   }
 
   const [banButtons, setBanButtons] = useState([]);
