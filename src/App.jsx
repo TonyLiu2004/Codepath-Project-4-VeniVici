@@ -12,6 +12,10 @@ function App() {
 
   const [currentImage, setCurrentImage] = useState(null);
   const [catName, setCatName] = useState("");
+  const [description, setDescription] = useState("");
+  const [lifeSpan, setLifeSpan] = useState("");
+  const [origin, setOrigin] = useState("");
+  const [weight, setWeight] = useState("");
 
   const callAPI = async (query) => {
     const response = await fetch(query);
@@ -23,8 +27,29 @@ function App() {
     else {
       setCurrentImage(json[0].url);
       setCatName(json[0].breeds[0].name);
+      setDescription(json[0].breeds[0].description);
+      setLifeSpan(json[0].breeds[0].life_span + " years");
+      setOrigin(json[0].breeds[0].origin);
+      setWeight(json[0].breeds[0].weight['imperial'] + " lbs");
+      console.log(weight);
     }
   }
+
+  const [banButtons,setBanButtons] = useState([]);
+  const addButton = (input) => {
+    const newButton = (
+        <button key={input} onClick={() => deleteButton(input)}>
+          {input}
+        </button>);
+    setBanButtons([...banButtons,newButton]);
+  }
+
+  const deleteButton = (input) => {
+    const updatedButtons = banButtons.filter((button) => button.key !== input);
+    setBanButtons(updatedButtons);
+  };
+
+  
 
   return (
       <div className = "everything">
@@ -33,10 +58,10 @@ function App() {
         <div className='catStuff'>
           <p style={{ fontSize: '30px', margin:'0px', paddingBottom:'10px'}}>{catName}</p>
           <div className = "attribute-buttons">
-            <button>a---</button>
-            <button>b---</button>
-            <button>c---</button>
-            <button>d---</button>
+            {catName ? (<button onClick={() => addButton(`${catName}`)}>{catName}</button>) : (<div></div>)}
+            {weight ? (<button onClick={() => addButton(`${weight}`)}>{weight}</button>) : (<div></div>)}
+            {origin ? (<button onClick={() => addButton(`${origin}`)}>{origin}</button>) : (<div></div>)}
+            {lifeSpan ? (<button onClick={() => addButton(`${lifeSpan}`)}>{lifeSpan}</button>) : (<div></div>)}
           </div>
           <br/>
 
@@ -45,19 +70,21 @@ function App() {
               className="cat-image"
               src={currentImage}
               alt="Cat image returned"
-              style={{width:'300px',height:'300px',objectFit:'cover'}}
+              style={{width:'350px',height:'350px',objectFit:'cover'}}
             />
           ) : (
             <div> </div>
           )}
 
           <br/><br/>
+          <p style={{ fontSize: '16px', margin:'0px', paddingBottom:'15px'}}>{description}</p>
           <button className = "generate-button" onClick = {makeQuery}>Generate</button>
         </div>
 
         <div class="sideNav">
           <h2>Ban List</h2>
           <h4>Select an attribute in your listing to ban it</h4>
+          {banButtons}
         </div>
       </div>
   );
