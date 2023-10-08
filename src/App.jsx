@@ -12,7 +12,7 @@ function App() {
 
   const [currentImage, setCurrentImage] = useState(null);
   const [catName, setCatName] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("Click generate to start!");
   const [lifeSpan, setLifeSpan] = useState("");
   const [origin, setOrigin] = useState("");
   const [weight, setWeight] = useState("");
@@ -35,18 +35,21 @@ function App() {
     }
   }
 
-  const [banButtons,setBanButtons] = useState([]);
+  const [banButtons, setBanButtons] = useState([]);
+  const [uniqueId, setUniqueId] = useState(0);
+
   const addButton = (input) => {
     const newButton = (
-        <button key={input} onClick={() => deleteButton(input)}>
-          {input}
-        </button>);
-    setBanButtons([...banButtons,newButton]);
-  }
+      <button key={uniqueId} onClick={() => deleteButton(input)}>
+        {input}
+      </button>
+    );
+    setUniqueId((prevId) => prevId + 1);
+    setBanButtons((prevButtons) => [...prevButtons, { id: uniqueId, content: input }]);
+  };
 
   const deleteButton = (input) => {
-    const updatedButtons = banButtons.filter((button) => button.key !== input);
-    setBanButtons(updatedButtons);
+    setBanButtons((prevButtons) => prevButtons.filter((button) => button.content !== input));
   };
 
   
@@ -73,7 +76,7 @@ function App() {
               style={{width:'350px',height:'350px',objectFit:'cover'}}
             />
           ) : (
-            <div> </div>
+            <div></div>
           )}
 
           <br/><br/>
@@ -84,7 +87,11 @@ function App() {
         <div class="sideNav">
           <h2>Ban List</h2>
           <h4>Select an attribute in your listing to ban it</h4>
-          {banButtons}
+          {banButtons.map((button) => (
+          <button key={button.id} onClick={() => deleteButton(button.content)}>
+            {button.content}
+          </button>
+        ))}
         </div>
       </div>
   );
