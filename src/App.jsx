@@ -39,11 +39,6 @@ function App() {
   const [uniqueId, setUniqueId] = useState(0);
 
   const addButton = (input) => {
-    const newButton = (
-      <button key={uniqueId} onClick={() => deleteButton(input)}>
-        {input}
-      </button>
-    );
     setUniqueId((prevId) => prevId + 1);
     setBanButtons((prevButtons) => [...prevButtons, { id: uniqueId, content: input }]);
   };
