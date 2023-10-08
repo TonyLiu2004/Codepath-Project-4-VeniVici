@@ -73,10 +73,10 @@ function App() {
 
   return (
       <div className = "everything">
-        <h1>Cool Cats</h1>
-        <p>Discover cats you've never seen before!</p>
+        <h1 style = {{fontSize:'60px', color:'black', margin:'0px'}}>Cool Cats</h1>
+        <p style = {{fontSize: '20px', color:'black'}}>Discover cats you've never seen before!</p>
         <div className='catStuff'>
-          <p style={{ fontSize: '30px', margin:'0px', paddingBottom:'10px'}}>{catName}</p>
+          <p style={{ fontSize: '40px', margin:'0px', paddingBottom:'10px'}}>{catName}</p>
           <div className = "attribute-buttons">
             {catName ? (<button onClick={() => addButton(`${catName}`)}>{catName}</button>) : (<div></div>)}
             {weight ? (<button onClick={() => addButton(`${weight}`)}>{weight}</button>) : (<div></div>)}
@@ -97,8 +97,8 @@ function App() {
           )}
 
           <br/><br/>
-          <p style={{ fontSize: '16px', margin:'0px', paddingBottom:'15px'}}>{description}</p>
-          <button className = "generate-button" onClick = {makeQuery}>Generate</button>
+          <p style={{ fontSize: '20px', margin:'0px', paddingBottom:'15px'}}>{description}</p>
+          <button className = "generate-button" onClick = {makeQuery} style={{ fontSize: '20px'}}>Generate</button>
         </div>
 
         <div class="sideNav">
